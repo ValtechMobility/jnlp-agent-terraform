@@ -16,9 +16,7 @@ RUN chmod +x /usr/local/bin/jenkins-agent && \
 
 ARG TF_VERSION=1.3.4
 ARG KUBECTL_VERSION=1.22.11-00
-ARG AWS_CLI_VERSION=2.9.5
 ARG AWS_IAM_AUTH_VERSION=0.5.7
-###########################################
 
 # Update packages and install general dependencies
 RUN apt-get update && apt-get upgrade -y
@@ -43,8 +41,8 @@ RUN which kubectl
 
 # install aws cli
 RUN apt-get install -y unzip less
-RUN curl "https://codeload.github.com/aws/aws-cli/zip/refs/tags/${AWS_CLI_VERSION}" -o "awscliv2.zip"
-RUN unzip awscliv2.zip
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+RUN unzip -q awscliv2.zip
 RUN ./aws/install
 RUN which aws
 
@@ -58,8 +56,6 @@ RUN aws --version
 RUN kubectl version --client=true
 RUN terraform version
 RUN aws-iam-authenticator version
-
-################################
 
 USER ${user}
 
