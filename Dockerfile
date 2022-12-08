@@ -43,7 +43,7 @@ RUN which kubectl
 
 # install aws cli
 RUN apt-get install -y unzip less
-RUN curl "https://github.com/aws/aws-cli/archive/refs/tags/${AWS_CLI_VERSION}.zip" -o "awscliv2.zip"
+RUN curl "https://codeload.github.com/aws/aws-cli/zip/refs/tags/${AWS_CLI_VERSION}" -o "awscliv2.zip"
 RUN unzip awscliv2.zip
 RUN ./aws/install
 RUN which aws
