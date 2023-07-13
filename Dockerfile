@@ -33,7 +33,7 @@ RUN terraform version
 
 # install kubectl
 RUN apt-get update && apt-get install -y apt-transport-https
-RUN curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+RUN wget -qO - terraform.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmour -o /usr/share/keyrings/kubernetes-archive-keyring.gpg
 RUN echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | tee /etc/apt/sources.list.d/kubernetes.list
 RUN apt-get update
 RUN apt-get install -y kubectl=${KUBECTL_VERSION}
@@ -56,6 +56,9 @@ RUN aws --version
 RUN kubectl version --client=true
 RUN terraform version
 RUN aws-iam-authenticator version
+
+# Make hosts file writeable for tunnel script
+RUN chmod 666 /etc/hosts
 
 USER ${user}
 
