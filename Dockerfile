@@ -57,9 +57,6 @@ RUN kubectl version --client=true
 RUN terraform version
 RUN aws-iam-authenticator version
 
-# Make hosts file writeable for tunnel script
-RUN chmod 666 /etc/hosts
-
 USER ${user}
 
 ENTRYPOINT ["/usr/local/bin/jenkins-agent"]
