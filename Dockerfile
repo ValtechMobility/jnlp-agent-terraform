@@ -46,6 +46,10 @@ RUN unzip -q awscliv2.zip
 RUN ./aws/install
 RUN which aws
 
+# Install aws cli ssm
+RUN curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb" -o "session-manager-plugin.deb"
+RUN dpkg -i session-manager-plugin.deb
+
 # Install aws-iam-authenticator
 RUN curl -L -o aws-iam-authenticator https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v${AWS_IAM_AUTH_VERSION}/aws-iam-authenticator_${AWS_IAM_AUTH_VERSION}_linux_amd64
 RUN chmod +x ./aws-iam-authenticator && cp aws-iam-authenticator /usr/bin/aws-iam-authenticator
