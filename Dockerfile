@@ -15,7 +15,6 @@ RUN chmod +x /usr/local/bin/jenkins-agent && \
     ln -s /usr/local/bin/jenkins-agent /usr/local/bin/jenkins-slave
 
 ARG TF_VERSION=1.3.4
-ARG KUBECTL_VERSION=1.22.11-00
 ARG AWS_IAM_AUTH_VERSION=0.5.7
 
 # Update packages and install general dependencies
@@ -32,11 +31,7 @@ RUN which terraform
 RUN terraform version
 
 # install kubectl
-RUN apt-get update && apt-get install -y apt-transport-https
-RUN wget -qO - terraform.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmour -o /usr/share/keyrings/kubernetes-archive-keyring.gpg
-RUN echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | tee /etc/apt/sources.list.d/kubernetes.list
-RUN apt-get update
-RUN apt-get install -y kubectl=${KUBECTL_VERSION}
+RUN snap install kubectl --channel=1.22/stable --classic
 RUN which kubectl
 
 # install aws cli
