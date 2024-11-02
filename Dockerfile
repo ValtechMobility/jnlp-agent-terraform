@@ -15,6 +15,7 @@ RUN chmod +x /usr/local/bin/jenkins-agent && \
     ln -s /usr/local/bin/jenkins-agent /usr/local/bin/jenkins-slave
 
 ARG TF_VERSION=1.3.4
+ARG KUBECTL_VERSION=v1.22.17
 ARG AWS_IAM_AUTH_VERSION=0.5.7
 
 # Update packages and install general dependencies
@@ -31,7 +32,10 @@ RUN which terraform
 RUN terraform version
 
 # install kubectl
-RUN snap install kubectl --channel=1.22/stable --classic
+RUN curl -LO "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl"
+RUN curl -LO "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl.sha256"
+RUN echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+RUN install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 RUN which kubectl
 
 # install aws cli
