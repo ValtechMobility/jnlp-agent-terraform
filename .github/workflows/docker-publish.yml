@@ -26,7 +26,7 @@ jobs:
         run: docker build --build-arg "TF_VERSION=1.4.7-*" . --file Dockerfile --tag $IMAGE_NAME --cache-from ghcr.io/${{ github.repository }}:latest
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
